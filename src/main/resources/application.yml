@@ -1,0 +1,25 @@
+spring:
+    jpa:
+        show-sql: true
+        database: mysql
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create-drop
+
+    datasource:
+        url: jdbc:mysql://localhost:3307/exposed_study?useSSL=false&serverTimezone=Asia/Seoul&autoReconnect=true&rewriteBatchedStatements=true&useServerPrepStmts=false&logger=Slf4JLogger&profileSQL=false&maxQuerySizeToLog=100000
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #hikari:
+            #maximumPoolSize: 10000  # 최대 풀 크기 설정
+    exposed:
+        generate-ddl: true
+#        show-sql: true
+#        excluded-packages: com.example.exposedstudy # 특정 스키마 제외
+
+logging:
+    config: classpath:logback-spring.xml
+    level:
+        root: info
+        Exposed: debug

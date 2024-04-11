@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true" scanPeriod="60 seconds">
+
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+  <springProperty scope="context" name="LOG_LEVEL" source="spring.logging.level.root" />
+  <springProperty scope="context" name="EXPOSED_LEVEL" source="spring.logging.level.Exposed" />
+
+
+  <logger name="org.jetbrains.exposed.sql.statements.jdbc.JdbcExecutor" level="${EXPOSED_LEVEL}" />
+
+  <root level="${LOG_LEVEL}">
+    <appender-ref ref="CONSOLE" />
+  </root>
+</configuration>
