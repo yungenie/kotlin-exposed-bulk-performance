@@ -11,8 +11,8 @@ spring:
         username: root
         password: 1234
         driver-class-name: com.mysql.cj.jdbc.Driver
-        #hikari:
-            #maximumPoolSize: 10000  # 최대 풀 크기 설정
+        hikari:
+            maximumPoolSize: 10000  # 최대 풀 크기 설정
     exposed:
         generate-ddl: true
 #        show-sql: true

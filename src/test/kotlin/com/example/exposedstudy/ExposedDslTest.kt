@@ -2,6 +2,7 @@ package com.example.exposedstudy
 
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.util.StopWatch
 import java.math.BigDecimal
@@ -11,11 +12,15 @@ class ExposedDslTest : ExposedTestSupport() {
 
     @Test
 //    @Transactional
+    @DisplayName("kotlin exposed batch insert 성공")
     fun `payment batch insert`() {
 
-        val amounts = (1..100000).map { it.toBigDecimal() }
-        val batchSize = 1000 // 배치 크기 설정
+        val amounts = (1..10000).map { it.toBigDecimal() }
 
+        /* 배치 크기 설정
+         * 한번에 처리되는 데이터 양을 줄여서 배치 작업 효율성 향상. 크기 조절해서 성능 최적화. 최적의 값 찾기
+         */
+        val batchSize = 1000
         performBatchInsertPayment(amounts, batchSize)
     }
 
@@ -30,8 +35,8 @@ class ExposedDslTest : ExposedTestSupport() {
             transaction {
                 Payments.batchInsert(
                         chunk,
-                        ignore = false,
-                        shouldReturnGeneratedValues = false
+                        ignore = false, // 중복되는 행이 발생했을 때 무시하는 옵션 (true : 진행, false : 오류 발생)
+                        shouldReturnGeneratedValues = false // 자동 생성된 ID 을 반환하지 않음.
                 ) { amount ->
                     this[Payments.orderId] = amount.toLong()
                     this[Payments.amount] = amount
